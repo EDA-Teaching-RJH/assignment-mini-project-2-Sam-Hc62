@@ -85,6 +85,16 @@ def main():
             json.dump(Car.__dict__, f) #saves the attributes of the Car class as a dictionary to the json file
         print("Car data saved.")   
 
+    def load_car():#function to load values from json file
+        try:
+            with open("car_data.json", "r") as f: #opens file in read mode
+                car_file = json.load(f) #loads the data from the json file and stores it in a variable
+            print("Car data loaded.") 
+            return Car(**car_file) #creates a new Car object using the data loaded from the json file
+        except FileNotFoundError:
+            print("No saved file found.")
+            return None
+          
     def display_values(cls, Car): #function to displays current values in a table format
         print(f"{'Mass':<10}{'Engine Power':<15}{'Drag Coefficient':<20}{'Frontal Area':<15}{'efficiency':<11}")
         print("-"*71)
@@ -96,7 +106,7 @@ def main():
 
         while True:
             #printing menu options for user
-            print('\n(1) Calculate 0-60mph\n(2) Change mass\n(3) Change engine power\n(4) Change drag coefficient\n(5) Change frontal area\n(6) Change drivetrain efficiency\n(7) Save car\n(8) Load car\n(10) Display values\n (11) Exit')
+            print('\n(1) Calculate 0-60mph\n(2) Change mass\n(3) Change engine power\n(4) Change drag coefficient\n(5) Change frontal area\n(6) Change drivetrain efficiency\n(7) Save car\n(8) Load car\n(9) Display values\n (10) Exit')
             choice = input('Choose an option: ') #getting user input for menu choice
 
             if not choice.isdigit(): #make sure input is a number
@@ -123,7 +133,11 @@ def main():
                 Car.efficiency = get_efficiency() #opens the function to get drivetrain efficiency input and changes the value in the class
                 print(f'Drivetrain efficiency changed to {Car.efficiency}') #prints the new value of drivetrain efficiency
             elif choice == 7:
-                save_to_file(Car)
-            elif choice == 10:
-                display_values()
+                save_to_file(Car) #opens the function to save the values to a json file
+            elif choice == 8:
+                loaded_car = load_car() #opens the function to load values from a json file
+                if loaded_car:
+                    Car = loaded_car #if a car was successfully loaded, it replaces the current Car object with the loaded one
+            elif choice == 9:
+                display_values(Car)
     menu()
