@@ -88,11 +88,7 @@ def main():
             cars = []
 
         name = input("Enter a name for this car: ").strip() #asking user for a name to save the car under, stripping whitespace from the input
-        if not name:
-            name = f"Car{len(cars)+1}" 
-
-        car_dict = {'name': name,'mass': car.mass,'power': car.power,'drag': car.drag,'area': car.area,'efficiency': car.efficiency} #creating a dictionary of the car's values to save in the json file
-        cars.append(car_dict) #adding the new car to the list of cars 
+        cars.append({'name': name,'mass': car.mass,'power': car.power,'drag': car.drag,'area': car.area,'efficiency': car.efficiency}) #adding the new car to the list of cars 
 
         try:
             with open("car_data.json", "w") as f: #opening the file in write mode and saving the updated list of cars back to the file
