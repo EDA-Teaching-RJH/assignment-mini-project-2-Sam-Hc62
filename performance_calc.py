@@ -1,4 +1,3 @@
-import math #for the calculation 
 import re #for accepting correct inputs
 import json #for saving and loading
 def main():
@@ -51,6 +50,15 @@ def main():
             
 
     def get_drag():
+        while True:
+            drag_value = input('Drag Coefficient')
+
+            if not re.fullmatch(r"^0\.\d{2}$", drag_value): #only accepting 0.XY 
+                print('Must be a realistic value...')
+                continue
+            else:
+                return float(drag_value)
+
     def get_area():
     def get_efficiency():
     def menu(): #display menu for user to chose what action to take
