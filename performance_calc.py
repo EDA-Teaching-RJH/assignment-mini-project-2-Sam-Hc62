@@ -9,7 +9,7 @@ def main():
     target_speed = 26.8  # 26m/s = 60mph
     time_step = 0.01
     
-    class car: #setting class for values to be input
+    class Car: #setting class for values to be input
         def __init__(self,mass,power,drag,area,efficiency):
             self.mass = mass
             self.power = power
@@ -17,5 +17,8 @@ def main():
             self.area = area
             self.efficiency = efficiency
 
+    def calculate_time(Car): #this function will do the calculation
+        velocity = 0.00000001 #negligable start velocity to not divide by 0
+        time = 0
 
-
+        
