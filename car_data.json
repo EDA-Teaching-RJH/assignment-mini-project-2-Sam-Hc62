@@ -1,1 +1,49 @@
-{"mass": 1600, "power": 123000.0, "drag": 0.25, "area": 3.0, "efficiency": 0.85}
+[
+  {
+    "mass": 1600,
+    "power": 123000.0,
+    "drag": 0.25,
+    "area": 3.0,
+    "efficiency": 0.85
+  },
+  {
+    "name": "sam",
+    "mass": 1600,
+    "power": 120000,
+    "drag": 0.25,
+    "area": 2.2,
+    "efficiency": 0.85
+  },
+  {
+    "name": "sam",
+    "mass": 1600,
+    "power": 120000,
+    "drag": 0.25,
+    "area": 2.2,
+    "efficiency": 0.85
+  },
+  {
+    "name": "sam",
+    "mass": 1600,
+    "power": 120000,
+    "drag": 0.25,
+    "area": 2.2,
+    "efficiency": 0.85
+  },
+  {
+    "name": "sam",
+    "mass": 1600,
+    "power": 120000,
+    "drag": 0.25,
+    "area": 2.2,
+    "efficiency": 0.85
+  },
+  {
+    "name": "sam",
+    "mass": 1600,
+    "power": 120000,
+    "drag": 0.25,
+    "area": 2.2,
+    "efficiency": 0.85
+  }
+]

@@ -80,21 +80,56 @@ def main():
             else:
                 return float(efficiency_value) #converting string to float and returning the value to the menu and then class
 
-    def save_to_file(car): #function to save current values to a json file
-        with open("car_data.json", "w") as f: #opens file in write mode, if it doesn't exist it will be created
-            json.dump(car.__dict__, f) #saves the attributes of the Car class as a dictionary to the json file
-        print("Car data saved.")   
-
-    def load_car():#function to load values from json file
+    def save_to_file(car):
         try:
-            with open("car_data.json", "r") as f: #opens file in read mode
-                car_file = json.load(f) #loads the data from the json file and stores it in a variable
-            print("Car data loaded.") 
-            return Car(**car_file) #creates a new Car object using the data loaded from the json file
-        except FileNotFoundError:
-            print("No saved file found.")
+            with open("car_data.json", "r") as f:
+                cars = json.load(f)
+            if not isinstance(cars, list):
+                # if someone saved a single dict before, convert to list
+                cars = [cars]
+        except (FileNotFoundError, json.JSONDecodeError):
+            cars = []
+
+        name = input("Enter a name for this car: ").strip()
+        if not name:
+            name = f"Car{len(cars)+1}"
+
+        car_dict = {'name': name,'mass': car.mass,'power': car.power,'drag': car.drag,'area': car.area,'efficiency': car.efficiency}
+        cars.append(car_dict)
+        with open("car_data.json", "w") as f:
+            json.dump(cars, f, indent=2)
+
+        print(f"Car '{name}' saved.")
+
+    def load_car():
+        try:
+            with open("car_data.json", "r") as f:
+                cars = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            print("No saved cars found.")
             return None
-          
+
+        print("\nSaved Cars:")
+        print("-"*70)
+        print(f"{'No.':<4}{'Name':<15}{'Mass':<10}{'Power':<10}{'Drag':<10}{'Area':<10}{'Eff':<5}")
+        print("-"*70)
+        for i, c in enumerate(cars):
+            name = c.get('name') or 'empty slot...'
+            mass = str(c.get('mass')) if c.get('mass') is not None else 'X'
+            power = str(c.get('power')) if c.get('power') is not None else 'X'
+            drag = str(c.get('drag')) if c.get('drag') is not None else 'X'
+            area = str(c.get('area')) if c.get('area') is not None else 'X'
+            efficiency = str(c.get('efficiency')) if c.get('efficiency') is not None else 'X'
+            print(f"{i+1:<4}{name:<15}{mass:<10}{power:<10}{drag:<10}{area:<10}{efficiency:<5}")
+        print("-"*70)
+        while True:
+            choice = input("Enter the number of the car to load: ")
+            if choice.isdigit() and 1 <= int(choice) <= len(cars):
+                selected = cars[int(choice)-1]
+                return Car(**{k: selected[k] for k in ['mass','power','drag','area','efficiency']})
+            else:
+                print("Invalid choice, try again.")
+            
     def display_values(car): #function to displays current values in a table format
         print("\nCurrent values:")
         print("-"*81)
