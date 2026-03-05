@@ -60,12 +60,21 @@ def main():
                 return float(drag_value)
 
     def get_area():
+        while True:
+            area_value = input('Frontal Area (m²): ')
+
+            if not re.fullmatch(r"^(?:1\.[5-9]\d*|[23](\.\d+)?)$", area_value): #only accepting numbers between 1.5 and 4
+                print('Must be a realistic value...')
+                continue
+            else:
+                return float(area_value)
     def get_efficiency():
+
     def menu(): #display menu for user to chose what action to take
         car = Car(1600,120000,0.25,2.2,0.85) #estimated averages in place already if any info is missing calculations can still be done
 
         while True:
-            print('\n(1) Calculate 0-60mph\n(2) Change mass\n(3) Change engine power\n(4) Change drag coefficient\n(5) Change frontal area\n(6) Change drivetrain efficiency\n(7) Save car\n(8) Load car\n(9) Exit')
+            print('\n(1) Calculate 0-60mph\n(2) Change mass\n(3) Change engine power\n(4) Change drag coefficient\n(5) Change frontal area\n(6) Change drivetrain efficiency\n(7) Save car\n(8) Load car\n(10) Display values\n (11) Exit')
             choice = input('Choose an option: ')
 
             if not choice.isdigit(): #make sure input is a number
