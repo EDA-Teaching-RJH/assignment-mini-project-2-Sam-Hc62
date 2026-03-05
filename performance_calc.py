@@ -29,6 +29,7 @@ def main():
             time += time_step #counting in increments of 0.01
         return round(time, 2) #rounding final value to 2dp
 
+
     def get_mass(): #function to get input for mass
         while True:
             mass_value = input('Mass (Kg): ')
@@ -38,6 +39,7 @@ def main():
                 continue
             else:
                 return float(mass_value) #converting string to float
+            
     def get_power(): #function to get input for engine power
         while True:
             power_value = input('Engine Power (kW): ')
@@ -48,7 +50,6 @@ def main():
             else:
                 return float(power_value) #converting string to float
             
-
     def get_drag(): #function to get drag input
         while True:
             drag_value = input('Drag Coefficient')
@@ -57,8 +58,8 @@ def main():
                 print('Must be a realistic value...')
                 continue
             else:
-                return float(drag_value)
-
+                return float(drag_value) #converting string to float
+            
     def get_area(): #function to get area input
         while True:
             area_value = input('Frontal Area (m²): ')
@@ -77,7 +78,14 @@ def main():
                 print('Must be a realistic value...')
                 continue
             else:
-                return float(efficiency_value)
+                return float(efficiency_value) #converting string to float
+
+
+    def display_values(cls, Car): #function to displays current values in a table format
+        print(f"{'Mass':<10}{'Engine Power':<15}{'Drag Coefficient':<20}{'Frontal Area':<15}{'efficiency':<11}")
+        print("-"*71)
+        for s in Car:
+            print(f"{s.mass:<10}{s.power:<15}{s.drag:<20}{s.area:<15}{s.efficiency:<11}")
 
     def menu(): #display menu for user to chose what action to take
         car = Car(1600,120000,0.25,2.2,0.85) #estimated averages in place already if any info is missing calculations can still be done
@@ -108,7 +116,3 @@ def main():
             elif choice == 10:
                 display_values()
     menu()
-
-
-
-        
