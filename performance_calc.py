@@ -96,17 +96,18 @@ def main():
             return None
           
     def display_values(car): #function to displays current values in a table format
-        print("-"*71)
-        print(f"{'Mass':<10}{'Engine Power':<15}{'Drag Coefficient':<20}{'Frontal Area':<15}{'efficiency':<11}")
-        print("-"*71)
-        print(f"{car.mass:<10}{car.power:<15}{car.drag:<20}{car.area:<15}{car.efficiency:<11}")
-        print("-"*71)
+        print("\nCurrent values:")
+        print("-"*81)
+        print(f"{'Mass(Kg)':<10}{'Engine Power(W)':<20}{'Drag Coefficient':<20}{'Frontal Area(m²)':<20}{'Efficiency':<11}")
+        print("-"*81)
+        print(f"{car.mass:<10}{car.power:<20}{car.drag:<20}{car.area:<20}{car.efficiency*100}%")
+        print("-"*81)
     def menu(): #display menu for user to chose what action to take
         car = Car(1600,120000,0.25,2.2,0.85) #estimated averages in place already if any info is missing calculations can still be done
 
         while True:
             #printing menu options for user
-            print('\n(1) Calculate 0-60mph\n(2) Change mass\n(3) Change engine power\n(4) Change drag coefficient\n(5) Change frontal area\n(6) Change drivetrain efficiency\n(7) Save car\n(8) Load car\n(9) Display values\n(10) Exit')
+            print('\n(1)  Calculate 0-60mph\n(2)  Change mass\n(3)  Change engine power\n(4)  Change drag coefficient\n(5)  Change frontal area\n(6)  Change drivetrain efficiency\n(7)  Save car\n(8)  Load car\n(9)  Display values\n(10) Exit')
             choice = input('\nChoose an option: ') #getting user input for menu choice
 
             if not choice.isdigit(): #make sure input is a number
