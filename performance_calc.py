@@ -49,17 +49,17 @@ def main():
                 return float(power_value) #converting string to float
             
 
-    def get_drag():
+    def get_drag(): #function to get drag input
         while True:
             drag_value = input('Drag Coefficient')
 
-            if not re.fullmatch(r"^0\.\d{2}$", drag_value): #only accepting 0.XY 
+            if not re.fullmatch(r"^0\.\d{2}$", drag_value): #only accepting 0.XY format
                 print('Must be a realistic value...')
                 continue
             else:
                 return float(drag_value)
 
-    def get_area():
+    def get_area(): #function to get area input
         while True:
             area_value = input('Frontal Area (m²): ')
 
@@ -67,8 +67,17 @@ def main():
                 print('Must be a realistic value...')
                 continue
             else:
-                return float(area_value)
-    def get_efficiency():
+                return float(area_value) #converting string to float
+            
+    def get_efficiency(): #function to get efficiency input
+        while True:
+            efficiency_value = input('Drivetrain Efficiency: ')
+
+            if not re.fullmatch(r"^0\.\d{2}$", efficiency_value): #only accepting 0.XY format
+                print('Must be a realistic value...')
+                continue
+            else:
+                return float(efficiency_value)
 
     def menu(): #display menu for user to chose what action to take
         car = Car(1600,120000,0.25,2.2,0.85) #estimated averages in place already if any info is missing calculations can still be done
@@ -96,6 +105,8 @@ def main():
                 Car.area = get_area()
             elif choice == 6:
                 Car.efficiency = get_efficiency()
+            elif choice == 10:
+                display_values()
     menu()
 
 
