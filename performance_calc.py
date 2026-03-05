@@ -80,53 +80,53 @@ def main():
             else:
                 return float(efficiency_value) #converting string to float and returning the value to the menu and then class
 
-    def save_to_file(car):
+    def save_to_file(car): #function to save values to a json file
         try:
-            with open("car_data.json", "r") as f:
-                cars = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
+            with open("car_data.json", "r") as f: #try to open the file and load existing data  
+                cars = json.load(f) 
+        except (FileNotFoundError, json.JSONDecodeError): #if file does not exist or is empty, start with an empty list
             cars = []
 
-        name = input("Enter a name for this car: ").strip()
+        name = input("Enter a name for this car: ").strip() #asking user for a name to save the car under, stripping whitespace from the input
         if not name:
-            name = f"Car{len(cars)+1}"
+            name = f"Car{len(cars)+1}" 
 
-        car_dict = {'name': name,'mass': car.mass,'power': car.power,'drag': car.drag,'area': car.area,'efficiency': car.efficiency}
-        cars.append(car_dict)
+        car_dict = {'name': name,'mass': car.mass,'power': car.power,'drag': car.drag,'area': car.area,'efficiency': car.efficiency} #creating a dictionary of the car's values to save in the json file
+        cars.append(car_dict) #adding the new car to the list of cars 
 
         try:
-            with open("car_data.json", "w") as f:
-                json.dump(cars, f, indent=2)
-            print(f"Car '{name}' saved.")
-        except Exception as e:
+            with open("car_data.json", "w") as f: #opening the file in write mode and saving the updated list of cars back to the file
+                json.dump(cars, f, indent=2) 
+            print(f"'{name}' saved...") 
+        except Exception as e: #catching any exceptions that may occur during the file writing process 
             print(f"Error saving car: {e}")
 
 
     def load_car():
         try:
-            with open("car_data.json", "r") as f:
+            with open("car_data.json", "r") as f: #try to open the file and load existing data
                 cars = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
+        except (FileNotFoundError, json.JSONDecodeError): #if file does not exist or is empty, returns nothing
             print("No saved cars found.")
             return None
 
-        if not cars:
+        if not cars: #if file does not exist or is empty, returns nothing
             print("No saved cars found in the file.")
             return None
 
         print("\nSaved Cars:")
         print("-"*70)
-        print(f"{'No.':<4}{'Name':<15}{'Mass':<10}{'Power':<10}{'Drag':<10}{'Area':<10}{'Eff':<5}")
+        print(f"{'No.':<4}{'Name':<15}{'Mass':<10}{'Power':<10}{'Drag':<10}{'Area':<10}{'Efficiency'}")
         print("-"*70)
         for idx, c in enumerate(cars, 1):
-            print(f"{idx:<4}{c['name']:<15}{c['mass']:<10}{c['power']:<10}{c['drag']:<10}{c['area']:<10}{c['efficiency']:<5}")
+            print(f"{idx:<4}{c['name']:<15}{c['mass']:<10}{c['power']:<10}{c['drag']:<10}{c['area']:<10}{c['efficiency']*100}%") #printing the list of saved cars in a table format with an index number for selection
         print("-"*70)
 
         while True:
             try:
-                choice = int(input("Enter the number of the car to load: "))
-                if 1 <= choice <= len(cars):
-                    selected = cars[choice-1]
+                choice_2 = int(input("Enter the number of the car to load: "))
+                if 1 <= choice_2 <= len(cars):
+                    selected = cars[choice_2-1]
                     return Car(mass=selected['mass'],power=selected['power'],drag=selected['drag'],area=selected['area'],efficiency=selected['efficiency'])
                 else:
                     print("Choice out of range. Try again.")
