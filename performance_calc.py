@@ -84,9 +84,6 @@ def main():
         try:
             with open("car_data.json", "r") as f:
                 cars = json.load(f)
-            if not isinstance(cars, list):
-                # if someone saved a single dict before, convert to list
-                cars = [cars]
         except (FileNotFoundError, json.JSONDecodeError):
             cars = []
 
@@ -96,10 +93,14 @@ def main():
 
         car_dict = {'name': name,'mass': car.mass,'power': car.power,'drag': car.drag,'area': car.area,'efficiency': car.efficiency}
         cars.append(car_dict)
-        with open("car_data.json", "w") as f:
-            json.dump(cars, f, indent=2)
 
-        print(f"Car '{name}' saved.")
+        try:
+            with open("car_data.json", "w") as f:
+                json.dump(cars, f, indent=2)
+            print(f"Car '{name}' saved.")
+        except Exception as e:
+            print(f"Error saving car: {e}")
+
 
     def load_car():
         try:
@@ -109,26 +110,28 @@ def main():
             print("No saved cars found.")
             return None
 
+        if not cars:
+            print("No saved cars found in the file.")
+            return None
+
         print("\nSaved Cars:")
         print("-"*70)
         print(f"{'No.':<4}{'Name':<15}{'Mass':<10}{'Power':<10}{'Drag':<10}{'Area':<10}{'Eff':<5}")
         print("-"*70)
-        for i, c in enumerate(cars):
-            name = c.get('name') or 'empty slot...'
-            mass = str(c.get('mass')) if c.get('mass') is not None else 'X'
-            power = str(c.get('power')) if c.get('power') is not None else 'X'
-            drag = str(c.get('drag')) if c.get('drag') is not None else 'X'
-            area = str(c.get('area')) if c.get('area') is not None else 'X'
-            efficiency = str(c.get('efficiency')) if c.get('efficiency') is not None else 'X'
-            print(f"{i+1:<4}{name:<15}{mass:<10}{power:<10}{drag:<10}{area:<10}{efficiency:<5}")
+        for idx, c in enumerate(cars, 1):
+            print(f"{idx:<4}{c['name']:<15}{c['mass']:<10}{c['power']:<10}{c['drag']:<10}{c['area']:<10}{c['efficiency']:<5}")
         print("-"*70)
+
         while True:
-            choice = input("Enter the number of the car to load: ")
-            if choice.isdigit() and 1 <= int(choice) <= len(cars):
-                selected = cars[int(choice)-1]
-                return Car(**{k: selected[k] for k in ['mass','power','drag','area','efficiency']})
-            else:
-                print("Invalid choice, try again.")
+            try:
+                choice = int(input("Enter the number of the car to load: "))
+                if 1 <= choice <= len(cars):
+                    selected = cars[choice-1]
+                    return Car(mass=selected['mass'],power=selected['power'],drag=selected['drag'],area=selected['area'],efficiency=selected['efficiency'])
+                else:
+                    print("Choice out of range. Try again.")
+            except ValueError:
+                print("Please enter a valid number.")
             
     def display_values(car): #function to displays current values in a table format
         print("\nCurrent values:")
