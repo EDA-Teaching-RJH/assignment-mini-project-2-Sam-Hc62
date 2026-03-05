@@ -7,7 +7,7 @@ def main():
     gravity = 9.81
     rolling_resistance_coefficient = 0.015
     target_speed = 26.8  # 26m/s = 60mph
-    time_step = 0.01
+    time_step = 0.01 
     
     class Car: #setting class for values to be input
         def __init__(self,mass,power,drag,area,efficiency):
@@ -20,16 +20,29 @@ def main():
     def calculate_time(Car): #this function will do the calculation
         velocity = 0.00000001 #negligable start velocity to not divide by 0
         time = 0
-        while velocity < target_speed: #count until at 60mph
+        while velocity < target_speed: #count until 60mph is reached
             engine_force = (Car.power*Car.efficiency)/velocity
             drag_force = 0.5*air_density*Car.drag*Car.area*velocity**2
             rolling_force = rolling_resistance_coefficient*Car.mass*gravity
             net_force = engine_force-drag_force-rolling_force
             acceleration = net_force/Car.mass
             velocity += acceleration*time_step
-            time += time_step #counting in chosen increment
+            time += time_step #counting in increments of 0.01
         return round(time, 2) #rounding final value to 2dp
-    
+
+    def get_mass(mass_value):
+        while True:
+            mass_value = input('Mass in Kgs: ')
+
+            if not re.fullmatch(r"^\d{3,4}$", mass_value): #only allows 3-4 digits
+                print("Must be a realistic value...")
+                continue
+            else:
+                return float(mass_value) #converting string to float
+    def get_power():
+    def get_drag():
+    def get_area():
+    def get_efficiency():
     def menu(): #display menu for user to chose what action to take
         car = Car(1600,120000,0.25,2.2,0.85) #estimated averages in place already if any info is missing calculations can still be done
 
@@ -46,7 +59,18 @@ def main():
                 time = calculate_time(Car) 
                 print(f'0-60mph in: {time} seconds') 
             elif choice == 2:
-                
+                Car.mass = get_mass()
+                print(f'Mass changed to {Car.mass}')
+            elif choice ==3:
+                Car.power = get_power()
+            elif choice == 4:
+                Car.drag = get_drag()
+            elif choice == 5:
+                Car.area = get_area()
+            elif choice == 6:
+                Car.efficiency = get_efficiency()
+    menu()
+
 
 
         
