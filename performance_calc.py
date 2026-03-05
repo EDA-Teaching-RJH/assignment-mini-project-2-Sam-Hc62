@@ -9,7 +9,7 @@ def main():
     target_speed = 26.8  # 26m/s = 60mph
     time_step = 0.01 
     
-    class Car: #setting class for values to be input
+    class Car: #setting up class for values to be input
         def __init__(self,mass,power,drag,area,efficiency):
             self.mass = mass
             self.power = power
@@ -30,16 +30,26 @@ def main():
             time += time_step #counting in increments of 0.01
         return round(time, 2) #rounding final value to 2dp
 
-    def get_mass(mass_value):
+    def get_mass(): #function to get input for mass
         while True:
-            mass_value = input('Mass in Kgs: ')
+            mass_value = input('Mass (Kg): ')
 
             if not re.fullmatch(r"^\d{3,4}$", mass_value): #only allows 3-4 digits
                 print("Must be a realistic value...")
                 continue
             else:
                 return float(mass_value) #converting string to float
-    def get_power():
+    def get_power(): #function to get input for engine power
+        while True:
+            power_value = input('Engine Power (kW): ')
+
+            if not re.fullmatch(r"^\d{5,7}$", power_value): #only accepts number between 5 and 7 digits long
+                print('Must be a realistic value...')
+                continue
+            else:
+                return float(power_value) #converting string to float
+            
+
     def get_drag():
     def get_area():
     def get_efficiency():
