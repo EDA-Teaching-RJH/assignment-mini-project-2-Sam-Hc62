@@ -20,5 +20,15 @@ def main():
     def calculate_time(Car): #this function will do the calculation
         velocity = 0.00000001 #negligable start velocity to not divide by 0
         time = 0
+        while velocity < target_speed: #count until at 60mph
+            engine_force = (Car.power*Car.efficiency)/velocity
+            drag_force = 0.5*air_density*Car.drag*Car.area*velocity**2
+            rolling_force = rolling_resistance_coefficient*Car.mass*gravity
+            net_force = engine_force-drag_force-rolling_force
+            acceleration = net_force/Car.mass
+            velocity += acceleration*time_step
+            time += time_step #counting in chosen increment
+        return round(time, 2) #rounding final value to 2dp
+
 
         
