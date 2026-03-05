@@ -80,6 +80,10 @@ def main():
             else:
                 return float(efficiency_value) #converting string to float and returning the value to the menu and then class
 
+    def save_to_file(Car): #function to save current values to a json file
+        with open("car_data.json", "w") as f: #opens file in write mode, if it doesn't exist it will be created
+            json.dump(Car.__dict__, f) #saves the attributes of the Car class as a dictionary to the json file
+        print("Car data saved.")   
 
     def display_values(cls, Car): #function to displays current values in a table format
         print(f"{'Mass':<10}{'Engine Power':<15}{'Drag Coefficient':<20}{'Frontal Area':<15}{'efficiency':<11}")
@@ -118,6 +122,8 @@ def main():
             elif choice == 6:
                 Car.efficiency = get_efficiency() #opens the function to get drivetrain efficiency input and changes the value in the class
                 print(f'Drivetrain efficiency changed to {Car.efficiency}') #prints the new value of drivetrain efficiency
+            elif choice == 7:
+                save_to_file(Car)
             elif choice == 10:
                 display_values()
     menu()
