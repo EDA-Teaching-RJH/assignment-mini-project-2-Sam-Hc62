@@ -29,6 +29,24 @@ def main():
             velocity += acceleration*time_step
             time += time_step #counting in chosen increment
         return round(time, 2) #rounding final value to 2dp
+    
+    def menu(): #display menu for user to chose what action to take
+        car = Car(1600,120000,0.25,2.2,0.85) #estimated averages in place already if any info is missing calculations can still be done
+
+        while True:
+            print('\n(1) Calculate 0-60mph\n(2) Change mass\n(3) Change engine power\n(4) Change drag coefficient\n(5) Change frontal area\n(6) Change drivetrain efficiency\n(7) Save car\n(8) Load car\n(9) Exit')
+            choice = input('Choose an option: ')
+
+            if not choice.isdigit(): #make sure input is a number
+                continue
+            
+            choice = int(choice) #converting string to integer
+
+            if choice == 1: 
+                time = calculate_time(Car) 
+                print(f'0-60mph in: {time} seconds') 
+            elif choice == 2:
+                
 
 
         
