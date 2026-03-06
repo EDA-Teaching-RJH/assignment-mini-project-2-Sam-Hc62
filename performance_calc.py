@@ -2,7 +2,7 @@ import conversions #importing conversions file for converting values to the corr
 import re #for accepting correct inputs 
 import json #for saving and loading
 def main():
-    name_pattern = re.compile(r"^[A-Za-z0-9 ]{1,20}$")
+    name_pattern = re.compile(r"^[A-Za-z0-9 ]{1,20}$") #regex pattern to validate car names, allowing letters, numbers, and spaces, with a maximum length of 20 characters
     #defining constants
     air_density = 1.225   
     gravity = 9.81
@@ -200,5 +200,25 @@ def main():
                 break #exits the loop and ends the program
             else:
                 continue #if the user input does not match any of the options, it will ask for input again
+    def run_tests():
+        print("\nTesting program...")
+        test_car = Car(1600,120000,0.25,2.2,0.85)
+        result = calculate_time(test_car)
+        if result > 0:
+            print("...3")
+        else:
+            print("Calculation test failed...")
+
+        if conversions.W_to_kW(120000) == 120:
+            print("...2")
+        else:
+            print("power conversion test failed")
+
+        if conversions.decimal_to_percent(0.85) == 85:
+            print("...1")
+        else:
+            print("Percentage conversion test failed")
+        print("Testing complete...")
+    run_tests()
     menu()
 main()
