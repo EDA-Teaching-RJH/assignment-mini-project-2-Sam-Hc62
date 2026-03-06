@@ -1,6 +1,8 @@
+import conversions #importing conversions file for converting values to the correct units
 import re #for accepting correct inputs 
 import json #for saving and loading
 def main():
+    name_pattern = re.compile(r"^[A-Za-z0-9 ]{1,20}$")
     #defining constants
     air_density = 1.225   
     gravity = 9.81
@@ -8,9 +10,14 @@ def main():
     target_speed = 26.8  # 26m/s = 60mph
     time_step = 0.01 
     
-    class Car: #setting up class for values to be input
-        def __init__(self,mass,power,drag,area,efficiency):
+    class Vehicle:
+        def __init__(self, mass):
             self.mass = mass
+
+
+    class Car(Vehicle):
+        def __init__(self, mass, power, drag, area, efficiency):
+            super().__init__(mass)
             self.power = power
             self.drag = drag
             self.area = area
@@ -28,7 +35,6 @@ def main():
             velocity += acceleration*time_step
             time += time_step #counting in increments of 0.01
         return round(time, 2) #rounding final value to 2dp
-
 
     def get_mass(): #function to get input for mass
         while True:
@@ -96,9 +102,9 @@ def main():
             cars = []
         while True:
             name = input("Enter a name for this car: ").strip() #asking user for a name to save the car under, stripping whitespace from the input
-            if len(name)>=20:
+            if not name_pattern.fullmatch(name):
                 print("Name must be less than 20 characters...\n")
-                continue #asks for input again
+                continue #asks for input again    
             else:
                 break
         cars.append({'name': name,'mass': int(car.mass),'power': int(car.power/1000),'drag': round(car.drag, 2),'area': car.area,'efficiency': car.efficiency}) #adding the new car to the list of cars 
@@ -109,7 +115,6 @@ def main():
             print(f"'{name}' saved...") 
         except Exception as e: #catching any exceptions that may occur during the file writing process 
             print(f"Error saving car: {e}")
-
 
     def load_car():
         try:
@@ -148,8 +153,9 @@ def main():
         print("-"*76)
         print(f"| {'Mass':<8}| {'Engine Power':<14}| {'Drag Coefficient':<18}| {'Frontal Area':<14}| {'Efficiency':<9} |")
         print("-"*76)
-        print(f"{f'| {car.mass}Kg':<10}{f'| {int(car.power/1000)}kW':<16}{f'| {car.drag}':<20}{f'| {car.area}m²':<16}{f'| {int(car.efficiency*100)}%':<13}|")
+        print(f"{f'| {car.mass}Kg':<10}{f'| {conversions.W_to_kW(car.power)}kW':<16}{f'| {car.drag}':<20}{f'| {car.area}m²':<16}{f'| {conversions.decimal_to_percent(car.efficiency)}%':<13}|")
         print("-"*76)
+    
     def menu(): #display menu for user to chose what action to take
         car = Car(1600,120000,0.25,2.2,0.85) #estimated averages in place already if any info is missing calculations can still be done
 
