@@ -10,14 +10,14 @@ def main():
     target_speed = 26.8  # 26m/s = 60mph
     time_step = 0.01 
     
-    class Vehicle:
+    class Vehicle: #base class for vehicles
         def __init__(self, mass):
             self.mass = mass
 
 
-    class Car(Vehicle):
-        def __init__(self, mass, power, drag, area, efficiency):
-            super().__init__(mass)
+    class Car(Vehicle): #subclass for values
+        def __init__(self, mass, power, drag, area, efficiency): 
+            super().__init__(mass) #inheritance 
             self.power = power
             self.drag = drag
             self.area = area
@@ -204,17 +204,17 @@ def main():
         print("\nTesting program...")
         test_car = Car(1600,120000,0.25,2.2,0.85)
         result = calculate_time(test_car)
-        if result > 0:
+        if result > 0: #testing that the time is a positive value
             print("...3")
         else:
             print("Calculation test failed...")
 
-        if conversions.W_to_kW(120000) == 120:
+        if conversions.W_to_kW(120000) == 120: #testing the watts to kW conversion
             print("...2")
         else:
-            print("power conversion test failed")
+            print("Power conversion test failed")
 
-        if conversions.decimal_to_percent(0.85) == 85:
+        if conversions.decimal_to_percent(0.85) == 85: #testing the efficiency percentage conversion 
             print("...1")
         else:
             print("Percentage conversion test failed")
